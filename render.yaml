@@ -1,0 +1,43 @@
+# ──────────────────────────────────────────────────────────────
+# Nurovia AI — Render deploy config (Blueprint)
+# ──────────────────────────────────────────────────────────────
+# Usage:
+#   1. go to https://dashboard.render.com/blueprints
+#   2. connect your GitHub repo
+#   3. select this render.yaml
+#   4. Render auto-creates the Postgres + the web service
+# ──────────────────────────────────────────────────────────────
+
+databases:
+  - name: nurovia-db
+    plan: free
+    databaseName: nurovia
+    user: nurovia
+    ipAllowList: []  # only internal access
+
+services:
+  - type: web
+    name: nurovia-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nurovia-db
+          property: connectionString
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false   # set after first deploy to your Render URL
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: ENVIRONMENT
+        value: production

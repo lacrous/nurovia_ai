@@ -1,0 +1,42 @@
+{
+  "name": "nurovia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nurovia AI — multi-provider council chat. Deploy anywhere (Vercel, Railway, Fly, Render, VPS).",
+  "homepage": "https://github.com/lacrous/nurovia_ai#readme",
+  "bugs": {
+    "url": "https://github.com/lacrous/nurovia_ai/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lacrous/nurovia_ai.git"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "web",
+    "api"
+  ],
+  "scripts": {
+    "dev:web": "cd web && npm run dev",
+    "dev:api": "cd api && npm run dev",
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "build:web": "cd web && npm install --no-audit --no-fund && npm run build",
+    "build:api": "cd api && npm install --no-audit --no-fund && npm run build",
+    "build:server": "echo 'server.js is plain JS, no build needed'",
+    "build": "npm run build:web && npm run build:api",
+    "start": "node server.js",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:push": "cd api && npm run db:push",
+    "db:studio": "cd api && npm run db:studio",
+    "docker:build": "docker build -t nurovia:latest .",
+    "docker:run": "docker run --rm -p 3000:3000 --env-file .env nurovia:latest"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,22 @@
+name: Feature Request
+description: Suggest a feature
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What do you want?
+      placeholder: |
+        I want to be able to do X so that Y.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why?
+      description: What problem does this solve?
+  - type: textarea
+    id: alt
+    attributes:
+      label: Alternative considered
+      description: Are there workarounds?
+      required: false

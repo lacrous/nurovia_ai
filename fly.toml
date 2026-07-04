@@ -1,0 +1,56 @@
+# ──────────────────────────────────────────────────────────────
+# Nurovia AI — Fly.io deploy config
+# ──────────────────────────────────────────────────────────────
+# Usage:
+#   fly launch --no-deploy            (uses this file)
+#   fly postgres create               (creates a DB)
+#   fly postgres attach <db-name>     (sets DATABASE_URL)
+#   fly secrets set ENCRYPTION_KEY=... FRONTEND_URL=...
+#   fly deploy
+# ──────────────────────────────────────────────────────────────
+
+app = "nurovia-ai"
+primary_region = "iad"  # change to your region
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 3000
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 80
+
+[[services.tcp_checks]]
+  interval = "15s"
+  timeout = "2s"
+  grace_period = "10s"
+
+[[services.http_checks]]
+  interval = "10s"
+  timeout = "2s"
+  grace_period = "20s"
+  method = "get"
+  path = "/health"
+
+[deploy]
+  release_command = "node -e \"console.log('deploying release')\""

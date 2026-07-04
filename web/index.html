@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo-192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Nurovia" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Nurovia AI" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+    <title>Nurovia AI — Multi-model AI council for serious developers</title>
+    <meta name="description" content="Orchestrate OpenAI, Anthropic, Gemini, DeepSeek, Qwen, and OpenRouter from one workspace. Council mode surfaces disagreement between models and synthesizes the answer. BYOK, client-side, no backend." />
+    <meta name="keywords" content="AI council, multi-model AI, code review, BYOK, OpenAI, Anthropic, Claude, GPT, Gemini, DeepSeek, Qwen, developer tools, AI code assistant" />
+    <meta name="author" content="Nurovia AI" />
+    <link rel="canonical" href="https://nurovia.ai/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nurovia AI" />
+    <meta property="og:title" content="Nurovia AI — Multi-model AI council for serious developers" />
+    <meta property="og:description" content="Run multiple AI models in parallel. See where they disagree. Get a synthesized answer. Client-side, BYOK, no backend." />
+    <meta property="og:url" content="https://nurovia.ai/" />
+    <meta property="og:image" content="https://nurovia.ai/og-cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nurovia AI council interface with three model votes and a synthesized answer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nurovia AI — Multi-model AI council" />
+    <meta name="twitter:description" content="Orchestrate OpenAI, Anthropic, Gemini, DeepSeek, Qwen, and OpenRouter from one workspace. Council mode surfaces disagreement. BYOK." />
+    <meta name="twitter:image" content="https://nurovia.ai/og-cover.png" />
+    <meta name="twitter:image:alt" content="Nurovia AI council interface" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <a href="#main" class="skip-link">Skip to main content</a>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="boot-error" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:#0a0a0c;color:#fff;font-family:monospace;">
+      <div style="max-width:600px;padding:24px;background:rgba(255,80,80,0.12);border:1px solid rgba(255,80,80,0.4);border-radius:12px;">
+        <p style="color:#ff8080;font-size:14px;margin:0 0 12px;font-weight:bold;">⚠️ Boot error</p>
+        <pre id="boot-error-msg" style="font-size:11px;white-space:pre-wrap;color:#ffcccc;margin:0;max-height:300px;overflow:auto;"></pre>
+        <button onclick="window.location.reload()" style="margin-top:16px;padding:8px 16px;background:#D4AF37;color:#0a0a0c;border:none;border-radius:8px;font-weight:bold;cursor:pointer;">Reload</button>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var box = document.getElementById('boot-error');
+        var msg = document.getElementById('boot-error-msg');
+        function show(text) {
+          if (box && msg) {
+            box.style.display = 'flex';
+            msg.textContent = text;
+          }
+        }
+        window.addEventListener('error', function(e) {
+          show((e.message || 'Unknown error') + '\n\nat ' + (e.filename || '?') + ':' + e.lineno + ':' + e.colno + '\n\n' + (e.error && e.error.stack || ''));
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+          show('Unhandled rejection: ' + (e.reason && e.reason.message || e.reason) + '\n\n' + (e.reason && e.reason.stack || ''));
+        });
+      })();
+    </script>
+    <script>
+      // Set theme before paint to avoid flash
+      (function () {
+        try {
+          var stored = localStorage.getItem("nurovia-ai-theme");
+          var resolved = stored;
+          if (!stored || stored === "system") {
+            resolved = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          if (resolved === "dark") document.documentElement.classList.add("dark");
+        } catch (e) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

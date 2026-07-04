@@ -1,0 +1,22 @@
+# ──────────────────────────────────────────────────────────────
+# Nurovia AI — Railway deploy config
+# ──────────────────────────────────────────────────────────────
+# Railway auto-detects Dockerfile. This file just sets:
+#   - builder = Dockerfile
+#   - restart policy
+#   - healthcheck
+# ──────────────────────────────────────────────────────────────
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "node server.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+# Postgres plugin auto-sets DATABASE_URL — no need to configure.
+# Add other secrets via the Railway dashboard → Variables tab.

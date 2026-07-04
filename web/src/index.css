@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 97%;
+    --foreground: 220 22% 10%;
+    --panel: 40 25% 94%;
+    --surface: 220 14% 92%;
+    --elevated: 0 0% 100%;
+    --theme: 220 12% 78%;
+    --muted: 220 10% 88%;
+    --muted-foreground: 220 10% 36%;
+    /* Default accent (gold) — used by Tailwind gold-* utilities and by
+       [data-accent] selectors below. Always defined so the variables never
+       resolve to "undefined undefined undefined" at first paint. */
+    --accent-h: 45;
+    --accent-s: 65%;
+    --accent-l: 52%;
+    --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+    --accent-rgb: 212 175 55;
+    --ring: var(--accent-h) var(--accent-s) var(--accent-l);
+    --border: 220 12% 78%;
+    --ring: var(--accent-h) var(--accent-s) var(--accent-l);
+    --radius: 0.75rem;
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: 220 20% 7%;
+    --foreground: 216 18% 93%;
+    --panel: 220 18% 10%;
+    --surface: 220 16% 13%;
+    --elevated: 220 16% 16%;
+    --theme: 220 14% 22%;
+    --muted: 220 14% 16%;
+    --muted-foreground: 220 10% 60%;
+    --border: 220 14% 22%;
+    --ring: var(--accent-h) var(--accent-s) var(--accent-l);
+    --radius: 0.75rem;
+    color-scheme: dark;
+  }
+
+  /* Accent palettes — applied via [data-accent] on <html>. The `--accent`
+     shortcut is the full hsl() and used for shadows, glows, and gradients.
+     The `--accent-rgb` triplet is for inline rgba() shadows. */
+  :root[data-accent="gold"],
+  .dark[data-accent="gold"] {
+    --accent-h: 45;
+    --accent-s: 65%;
+    --accent-l: 52%;
+    --accent: hsl(45 65% 52%);
+    --accent-rgb: 212 175 55;
+  }
+  :root[data-accent="blue"],
+  .dark[data-accent="blue"] {
+    --accent-h: 212;
+    --accent-s: 90%;
+    --accent-l: 58%;
+    --accent: hsl(212 90% 58%);
+    --accent-rgb: 46 123 230;
+  }
+  :root[data-accent="emerald"],
+  .dark[data-accent="emerald"] {
+    --accent-h: 158;
+    --accent-s: 70%;
+    --accent-l: 48%;
+    --accent: hsl(158 70% 48%);
+    --accent-rgb: 22 163 106;
+  }
+  :root[data-accent="purple"],
+  .dark[data-accent="purple"] {
+    --accent-h: 268;
+    --accent-s: 70%;
+    --accent-l: 62%;
+    --accent: hsl(268 70% 62%);
+    --accent-rgb: 124 58 237;
+  }
+  :root[data-accent="rose"],
+  .dark[data-accent="rose"] {
+    --accent-h: 340;
+    --accent-s: 75%;
+    --accent-l: 58%;
+    --accent: hsl(340 75% 58%);
+    --accent-rgb: 224 57 122;
+  }
+  /* Custom user accent — format: "H S% L%" e.g. "120 80% 45%" */
+  :root[data-accent-custom],
+  .dark[data-accent-custom] {
+    --accent-h: attr(data-accent-custom-h number);
+    --accent-s: attr(data-accent-custom-s number);
+    --accent-l: attr(data-accent-custom-l number);
+  }
+  /* Fallback: when [data-accent-custom] is set but attrs not supported, use --custom-accent */
+  :root {
+    --custom-accent-h: 45;
+    --custom-accent-s: 65%;
+    --custom-accent-l: 52%;
+  }
+  :root[data-accent-custom] {
+    /* Split stored HSL string into 3 vars. We rely on JS to write them. */
+  }
+
+  * {
+    @apply border-theme/30;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.6);
+    border-radius: 6px;
+  }
+  *:focus {
+    outline: none;
+  }
+  /* Skip link for keyboard users */
+  .skip-link {
+    position: absolute;
+    left: 50%;
+    top: -100px;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 10px 16px;
+    background: hsl(var(--ring));
+    color: hsl(0 0% 10%);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: top 0.15s ease-out;
+  }
+  .skip-link:focus {
+    top: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .txt-head {
+    @apply text-foreground;
+  }
+  .txt-body {
+    @apply text-foreground/90;
+  }
+  .txt-muted {
+    @apply text-muted-foreground;
+  }
+  .txt-faint {
+    @apply text-muted-foreground/70;
+  }
+  .bg-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.14), transparent 60%);
+  }
+  .dark .bg-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.12), transparent 60%);
+  }
+  .text-glow {
+    text-shadow: 0 0 40px rgba(var(--accent-rgb), 0.25);
+  }
+  .glass {
+    @apply bg-surface/70 backdrop-blur-md border border-theme/30;
+  }
+  .glass-strong {
+    @apply bg-surface/90 backdrop-blur-xl border border-theme/40 shadow-xl;
+  }
+  .prose-legal p {
+    margin-bottom: 0.85em;
+  }
+  .prose-legal strong {
+    @apply text-foreground font-semibold;
+  }
+  .prose-legal code {
+    @apply px-1.5 py-0.5 rounded bg-surface border border-theme/20 text-gold font-mono text-[12px];
+  }
+}
+
+@media print {
+  /* Hide chrome when printing legal pages */
+  header, footer, aside, nav, button, .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .prose-legal, .prose-legal p, .prose-legal strong, .prose-legal code {
+    color: black !important;
+    background: white !important;
+  }
+  section {
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  h1, h2 {
+    page-break-after: avoid;
+  }
+  .fixed {
+    position: static !important;
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@nurovia/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "homepage": "https://github.com/lacrous/nurovia_ai",
+  "repository": "https://github.com/lacrous/nurovia_ai.git",
+  "description": "Nurovia AI backend \u2014 auth, sessions, LLM relay",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node --import tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "test:e2e": "vitest run tests/e2e.test.ts"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "@hono/zod-validator": "^0.4.1",
+    "@hono/node-server": "^1.13.7",
+    "lucia": "^3.2.0",
+    "@lucia-auth/adapter-postgresql": "^3.0.0",
+    "drizzle-orm": "^0.36.0",
+    "@neondatabase/serverless": "^0.10.4",
+    "postgres": "^3.4.5",
+    "zod": "^3.23.8",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
+    "jose": "^5.9.6",
+    "arctic": "^2.2.2",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "drizzle-kit": "^0.28.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

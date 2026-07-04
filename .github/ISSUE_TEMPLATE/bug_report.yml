@@ -1,0 +1,36 @@
+name: Bug Report
+description: Report a bug
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: A clear description of the bug
+      placeholder: |
+        I tried to do X, but Y happened instead.
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. go to /chat
+        2. click send
+        3. ...
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: What did you expect to happen?
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "browser + OS (e.g. Chrome 119 on macOS 14)"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console + network errors
+      description: paste any error from DevTools → Console or Network
